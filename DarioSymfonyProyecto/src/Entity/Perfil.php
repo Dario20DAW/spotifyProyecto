@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PerfilRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PerfilRepository::class)]
@@ -19,8 +21,18 @@ class Perfil
     #[ORM\Column(length: 255)]
     private ?string $descripcion = null;
 
-    #[ORM\ManyToOne(inversedBy: 'perfils')]
-    private ?Estilo $estiloMusicalPreferido = null;
+    /**
+     * @var Collection<int, Estilo>
+     */
+    #[ORM\ManyToMany(targetEntity: Estilo::class, inversedBy: 'perfils')]
+    private Collection $estilos;
+
+    public function __construct()
+    {
+        $this->estilos = new ArrayCollection();
+    }
+
+
 
     public function getId(): ?int
     {
@@ -51,15 +63,29 @@ class Perfil
         return $this;
     }
 
-    public function getEstiloMusicalPreferido(): ?Estilo
+    /**
+     * @return Collection<int, Estilo>
+     */
+    public function getEstilos(): Collection
     {
-        return $this->estiloMusicalPreferido;
+        return $this->estilos;
     }
 
-    public function setEstiloMusicalPreferido(?Estilo $estiloMusicalPreferido): static
+    public function addEstilo(Estilo $estilo): static
     {
-        $this->estiloMusicalPreferido = $estiloMusicalPreferido;
+        if (!$this->estilos->contains($estilo)) {
+            $this->estilos->add($estilo);
+        }
 
         return $this;
     }
+
+    public function removeEstilo(Estilo $estilo): static
+    {
+        $this->estilos->removeElement($estilo);
+
+        return $this;
+    }
+
+
 }

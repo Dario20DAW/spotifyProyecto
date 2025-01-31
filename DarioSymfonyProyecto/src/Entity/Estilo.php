@@ -24,8 +24,10 @@ class Estilo
     /**
      * @var Collection<int, Perfil>
      */
-    #[ORM\OneToMany(targetEntity: Perfil::class, mappedBy: 'estiloMusicalPreferido')]
+    #[ORM\ManyToMany(targetEntity: Perfil::class, mappedBy: 'estilos')]
     private Collection $perfils;
+
+
 
     public function __construct()
     {
@@ -73,7 +75,7 @@ class Estilo
     {
         if (!$this->perfils->contains($perfil)) {
             $this->perfils->add($perfil);
-            $perfil->setEstiloMusicalPreferido($this);
+            $perfil->addEstilo($this);
         }
 
         return $this;
@@ -82,12 +84,11 @@ class Estilo
     public function removePerfil(Perfil $perfil): static
     {
         if ($this->perfils->removeElement($perfil)) {
-            // set the owning side to null (unless already changed)
-            if ($perfil->getEstiloMusicalPreferido() === $this) {
-                $perfil->setEstiloMusicalPreferido(null);
-            }
+            $perfil->removeEstilo($this);
         }
 
         return $this;
     }
+
+
 }
