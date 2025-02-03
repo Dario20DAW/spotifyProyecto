@@ -91,4 +91,10 @@ class Estilo
     }
 
 
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? 'Sin nombre';
+    }
+
 }

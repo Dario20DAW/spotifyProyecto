@@ -28,7 +28,7 @@ class Cancion
     private ?string $autor = null;
 
     #[ORM\ManyToOne(targetEntity: Estilo::class)]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Estilo $genero = null;
 
     #[ORM\Column]
@@ -48,6 +48,7 @@ class Cancion
      */
     #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'canciones')]
     private Collection $usuarios;
+
 
     public function __construct()
     {

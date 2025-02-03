@@ -49,6 +49,7 @@ class Usuario
     #[ORM\ManyToMany(targetEntity: Cancion::class, inversedBy: 'usuarios')]
     private Collection $canciones;
 
+
     public function __construct()
     {
         $this->playlists = new ArrayCollection();
