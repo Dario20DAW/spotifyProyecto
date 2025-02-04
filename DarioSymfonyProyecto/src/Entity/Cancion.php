@@ -47,6 +47,7 @@ class Cancion
      * @var Collection<int, Usuario>
      */
     #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'canciones')]
+    
     private Collection $usuarios;
 
 

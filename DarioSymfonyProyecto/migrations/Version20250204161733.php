@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250203221811 extends AbstractMigration
+final class Version20250204161733 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -26,7 +26,6 @@ final class Version20250203221811 extends AbstractMigration
         $this->addSql('ALTER TABLE perfil_estilo ADD CONSTRAINT FK_8C8A3EBE43798DA7 FOREIGN KEY (estilo_id) REFERENCES estilo (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE usuario_cancion ADD CONSTRAINT FK_9D44A5E7DB38439E FOREIGN KEY (usuario_id) REFERENCES usuario (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE usuario_cancion ADD CONSTRAINT FK_9D44A5E79B1D840F FOREIGN KEY (cancion_id) REFERENCES cancion (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE cancion CHANGE genero_id genero_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE perfil DROP FOREIGN KEY FK_966576471C9C8804');
         $this->addSql('DROP INDEX IDX_966576471C9C8804 ON perfil');
         $this->addSql('ALTER TABLE perfil DROP estilo_musical_preferido_id');
@@ -41,7 +40,6 @@ final class Version20250203221811 extends AbstractMigration
         $this->addSql('ALTER TABLE usuario_cancion DROP FOREIGN KEY FK_9D44A5E79B1D840F');
         $this->addSql('DROP TABLE perfil_estilo');
         $this->addSql('DROP TABLE usuario_cancion');
-        $this->addSql('ALTER TABLE cancion CHANGE genero_id genero_id INT NOT NULL');
         $this->addSql('ALTER TABLE perfil ADD estilo_musical_preferido_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE perfil ADD CONSTRAINT FK_966576471C9C8804 FOREIGN KEY (estilo_musical_preferido_id) REFERENCES estilo (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
         $this->addSql('CREATE INDEX IDX_966576471C9C8804 ON perfil (estilo_musical_preferido_id)');
