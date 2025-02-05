@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Playlist;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -16,13 +17,15 @@ class PlaylistCrudController extends AbstractCrudController
     }
 
     
-    /* public function configureFields(string $pageName): iterable
+    public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id'),
-            TextField::new('nombre'),
-            TextEditorField::new('description'),
+            IdField::new('id')->hideOnForm(),
+            TextField::new('nombre', 'Nombre de la Playlist'),
+            TextField::new('visibilidad', 'Visibilidad'),
+            IntegerField::new('reproducciones', 'Reproducciones'),
+            IntegerField::new('likes', 'Likes'),
         ];
-    } */
+    }
    
 }

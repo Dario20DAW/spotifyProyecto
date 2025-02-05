@@ -46,9 +46,10 @@ class Cancion
     /**
      * @var Collection<int, Usuario>
      */
+    // En Cancion
     #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'canciones')]
-    
     private Collection $usuarios;
+
 
 
     public function __construct()
@@ -201,5 +202,11 @@ class Cancion
         }
 
         return $this;
+    }
+
+
+    public function __toString(): string
+    {
+        return $this->titulo;
     }
 }

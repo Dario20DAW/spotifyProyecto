@@ -28,6 +28,7 @@ class Playlist
     private ?int $likes = null;
 
     #[ORM\ManyToOne(inversedBy: 'playlists')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Usuario $propietario = null;
 
     /**
@@ -171,5 +172,12 @@ class Playlist
         }
 
         return $this;
+    }
+
+
+
+    public function __toString(): string
+    {
+        return $this->nombre ?? 'Sin nombre';
     }
 }

@@ -25,6 +25,7 @@ class Estilo
      * @var Collection<int, Perfil>
      */
     #[ORM\ManyToMany(targetEntity: Perfil::class, mappedBy: 'estilos')]
+
     private Collection $perfils;
 
 

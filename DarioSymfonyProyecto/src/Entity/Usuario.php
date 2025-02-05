@@ -46,8 +46,10 @@ class Usuario
     /**
      * @var Collection<int, Cancion>
      */
+    // En Usuario
     #[ORM\ManyToMany(targetEntity: Cancion::class, inversedBy: 'usuarios')]
     private Collection $canciones;
+
 
 
     public function __construct()

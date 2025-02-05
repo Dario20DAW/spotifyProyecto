@@ -25,6 +25,7 @@ class Perfil
      * @var Collection<int, Estilo>
      */
     #[ORM\ManyToMany(targetEntity: Estilo::class, inversedBy: 'perfils')]
+
     private Collection $estilos;
 
     public function __construct()
