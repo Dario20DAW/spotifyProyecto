@@ -1,4 +1,4 @@
 # Spotify Dario
 
 ## Diagrama Actualizado
-![Diagrama](Diagramas/v3Spotify.png)
+![Diagrama](Diagramas/v3.png)
