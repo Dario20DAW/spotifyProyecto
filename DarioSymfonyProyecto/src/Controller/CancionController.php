@@ -46,4 +46,23 @@ final class CancionController extends AbstractController
             'path' => 'src/Controller/CancionController.php',
         ]);
     }
+
+
+    #[Route('/cancion/prueba', name: 'app_cancion_prueba')]
+    public function verCanciones(EntityManagerInterface $entityManager): JsonResponse
+    {
+        $canionRep = $entityManager->getRepository(Cancion::class);
+        $canciones = $canionRep->findAll();
+        $cancionTitulo = "";
+
+
+
+        foreach($canciones as $cancion){
+            $cancionTitulo .= $cancion->getTitulo();
+        }
+        return $this->json([
+            'message' => $cancionTitulo,
+            'path' => 'src/Controller/CancionController.php',
+        ]);
+    }
 }

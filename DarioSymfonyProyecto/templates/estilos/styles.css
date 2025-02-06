@@ -1,0 +1,44 @@
+body{
+    background-color: rgb(19, 2, 2);
+    color: white;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    
+}
+
+
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(34, 138, 199);
+    border: 5px solid white;
+
+}
+
+#SimboloLogIn{
+    height: 50px;
+}
+
+#Logo{
+    height: 70px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    &:hover{
+        text-decoration: underline;
+        font-style: oblique;
+    }
+}
+
+nav{
+    border: 5px solid white;
+    background-color:  rgb(34, 138, 199);
+    display:inline-block;
+    height: 90vh;
+}
