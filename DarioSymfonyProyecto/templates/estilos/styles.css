@@ -1,6 +1,8 @@
 body{
-    background-color: rgb(19, 2, 2);
+    background-color: rgb(139, 135, 135);
     color: white;
+    flex-direction: column;
+    display: flex;
 }
 
 *{
@@ -10,11 +12,18 @@ body{
 }
 
 
+#Contenido{
+    display: flex;
+    flex: 1;
+}
+
+
 header{
     display: flex;
     justify-content: space-between;
     background-color: rgb(34, 138, 199);
     border: 5px solid white;
+    text-align: center;
 
 }
 
@@ -26,10 +35,29 @@ header{
     height: 70px;
 }
 
+#Busqueda{
+    margin-top: 25px;
+    
+}
+
+#Busqueda input{
+    border-radius: 20px; 
+    border: 2px solid black; 
+    padding: 5px 10px; 
+    color: black;
+    background-color: lightgray;
+    font-size: 18px;
+
+    &:hover{
+        background-color: rgb(139, 135, 135);
+    }
+}
+
 a{
     text-decoration: none;
     color: white;
     font-size: 30px;
+    font-weight: bold;
     &:hover{
         text-decoration: underline;
         font-style: oblique;
@@ -41,4 +69,72 @@ nav{
     background-color:  rgb(34, 138, 199);
     display:inline-block;
     height: 90vh;
+    width: 15em;
 }
+
+
+#navSeparado{
+    margin-top: 50px;
+    background-color: rgb(0, 174, 255);
+    border-radius: 20px; 
+    border: 2px solid black; 
+    padding: 10px; 
+
+    &:hover{
+        padding: 20px;
+    }
+}
+
+nav img{
+    width: 25px;
+}
+
+
+#main{
+    flex: 1;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+#main h1{
+    background-color: rgb(0, 174, 255);
+    border-radius: 8px; 
+    border: 2px solid black;
+    font-weight: bold;
+}
+
+#ContenedorCanciones {
+    display: flex;
+    justify-content: center; 
+    margin-top: 50px;
+    gap: 20px; 
+  }
+
+  
+  .poster {
+    position: relative;
+    width: 300px; 
+    height: 400px;
+    background: url('https://via.placeholder.com/300x400') no-repeat center/cover; 
+    border: 2px solid black;
+    border-radius: 10px; 
+
+  }
+  
+
+
+  .poster-texto {
+    position: absolute;
+    bottom: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgb(0, 174, 255); 
+    color: white;
+    padding: 12px 18px; 
+    border-radius: 8px; 
+    border: 2px solid black;
+    text-align: center;
+  }
+  
+  
