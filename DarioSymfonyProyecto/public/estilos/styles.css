@@ -1,0 +1,160 @@
+body {
+    background-color: rgb(14, 4, 4);
+    color: white;
+    flex-direction: column;
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+* {
+    margin: 0px;
+    padding: 0px;
+}
+
+#Contenido {
+    display: flex;
+    flex: 1;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(238, 40, 40);
+    text-align: center;
+    height: 120px;
+}
+
+#SimboloLogIn {
+    height: 50px;
+}
+
+#Logo {
+    height: 70px;
+}
+
+#Busqueda {
+    margin-top: 25px;
+}
+
+#Busqueda input {
+    border-radius: 20px;
+    border: 2px solid black;
+    padding: 5px 10px;
+    color: black;
+    background-color: lightgray;
+    font-size: 18px;
+}
+
+#Busqueda input:hover {
+    background-color: rgb(139, 135, 135);
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+
+a:hover {
+    text-decoration: underline;
+    font-style: oblique;
+}
+
+nav {
+    display: flex;
+    height: 90vh;
+    width: 15em;
+    position: fixed;
+    left: 0;
+    top: 120px;
+}
+
+#navSeparado {
+    margin-top: 50px;
+    background-color: rgb(238, 40, 40);
+    border-radius: 20px;
+    padding: 10px;
+    margin-right: 20px;
+}
+
+#navSeparado:hover {
+    padding: 20px;
+    transition: .5s;
+}
+
+nav img {
+    width: 25px;
+}
+
+#contenidoPrincipal {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    background-color: rgb(20, 20, 20);
+    border: 1px solid rgb(20, 20, 20);
+    border-radius: 10px;
+    margin-top: 20px;
+    height: 400px;
+    margin-left: 18em; 
+}
+
+.canciones {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+
+}
+
+
+.playlists {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+.tituloContenidoPrincipal {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    margin-bottom: 20px; 
+}
+
+.imgMusica {
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.textoCancion {
+    margin-top: 5px;
+    color: white;
+    padding: 12px 18px;
+    text-align: center;
+    width: 250px;
+    font-weight: bold;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(20, 20, 20); /* Puedes poner el color que prefieras */
+    padding: 20px;
+    text-align: center;
+}
+
+#audioPlayer {
+    width: 500px;
+}

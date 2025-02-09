@@ -1,3 +1,3 @@
 
 ## Imagenes de la App
-![Diseño Base](IndexBase.png)
+![Diseño Base](IndexBaseReproductor.png)

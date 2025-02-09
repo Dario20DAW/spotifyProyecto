@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Controller\Response;
 use App\Entity\Estilo;
 use App\Entity\Cancion;
 use Doctrine\ORM\EntityManager;
@@ -8,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
 
 final class CancionController extends AbstractController
 {
@@ -48,21 +51,31 @@ final class CancionController extends AbstractController
     }
 
 
-    #[Route('/cancion/prueba', name: 'app_cancion_prueba')]
+    #[Route('/cancion/mostrarCanciones', name: 'app_mostrar_canciones')]
     public function verCanciones(EntityManagerInterface $entityManager): JsonResponse
     {
         $canionRep = $entityManager->getRepository(Cancion::class);
         $canciones = $canionRep->findAll();
-        $cancionTitulo = "";
-
-
+        $cancionTitulo = [];
 
         foreach($canciones as $cancion){
-            $cancionTitulo .= $cancion->getTitulo();
+            $cancionTitulo[] = [ 
+             'titulo' => $cancion->getTitulo(),
+             'autor' => $cancion->getAutor()
+            ];
         }
-        return $this->json([
-            'message' => $cancionTitulo,
-            'path' => 'src/Controller/CancionController.php',
-        ]);
+        return $this->json($cancionTitulo);
     }
+
+
+
+    #[Route('/cancion/{songName}/play', name: 'play_music', methods: ['GET'])]
+    public function playMusic(string $songName)
+    {
+    $musicDirectory = $this->getParameter('kernel.project_dir').'/songs/';
+    $filePath = $musicDirectory . $songName;
+
+    return new BinaryFileResponse($filePath);
+}
+
 }
