@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Playlist;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -25,6 +26,7 @@ class PlaylistCrudController extends AbstractCrudController
             TextField::new('visibilidad', 'Visibilidad'),
             IntegerField::new('reproducciones', 'Reproducciones'),
             IntegerField::new('likes', 'Likes'),
+            CollectionField::new('playlistCancions', 'Canciones')->useEntryCrudForm(PlaylistCancionCrudController::class),
         ];
     }
    

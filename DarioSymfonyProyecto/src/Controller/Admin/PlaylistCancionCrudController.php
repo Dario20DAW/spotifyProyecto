@@ -20,8 +20,8 @@ class PlaylistCancionCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            AssociationField::new('playlist', 'Selecciona la playlist'),
-            AssociationField::new('cancion', 'Selecciona la cancion que quieres añadir') 
+            AssociationField::new('playlist', 'playlist')->hideOnForm(),
+            AssociationField::new('cancion', 'Añadir cancion: ') 
         ];
     }
    

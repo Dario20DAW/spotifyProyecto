@@ -34,6 +34,7 @@ navCanciones.addEventListener('click', function(e){
             footer.appendChild(tituloFooter);
         }
 
+
         if (!autorFooter) {
             autorFooter = document.createElement('p');
             autorFooter.id = 'autorFooter';
@@ -60,7 +61,7 @@ navCanciones.addEventListener('click', function(e){
 
             divCancion.addEventListener('click', () => {
                 tituloFooter.textContent = cancion.titulo;
-                autorFooter.textContent = cancion.autor;
+                console.log(cancion.titulo);
 
                 let nombreCancion = cancion.titulo + ".mp3"; 
                 let audioSrc = `/cancion/${nombreCancion}/play`; //enlazamos con el controller y nos devuelve el binario de la cancion
@@ -98,8 +99,8 @@ navPlaylist.addEventListener('click', function(e){
             img.src = './imagenes/coverPlaylist.png';
             img.classList.add('imgMusica');
 
-            let divPlaylist = document.createElement('div');
 
+            let divPlaylist = document.createElement('div');
             let nombrePlaylist = document.createElement('p');
             nombrePlaylist.classList.add('textoCancion');
             nombrePlaylist.textContent = p.nombre;
@@ -107,6 +108,8 @@ navPlaylist.addEventListener('click', function(e){
             divPlaylist.appendChild(img);
             divPlaylist.appendChild(nombrePlaylist);
             grupoPlaylists.appendChild(divPlaylist);
+
+
             document.getElementById('contenidoPrincipal').appendChild(grupoPlaylists);
 
         }
