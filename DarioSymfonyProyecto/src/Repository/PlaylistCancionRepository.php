@@ -19,11 +19,11 @@ class PlaylistCancionRepository extends ServiceEntityRepository
     //    /**
     //     * @return PlaylistCancion[] Returns an array of PlaylistCancion objects
     //     */
-    //    public function findByExampleField($value): array
+    //    public function findByExampleField($id): array
     //    {
     //        return $this->createQueryBuilder('p')
     //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
+    //            ->setParameter('val', $id)
     //            ->orderBy('p.id', 'ASC')
     //            ->setMaxResults(10)
     //            ->getQuery()
@@ -31,13 +31,13 @@ class PlaylistCancionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?PlaylistCancion
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+       public function findOneId($id): ?PlaylistCancion
+       {
+           return $this->createQueryBuilder('p')
+               ->andWhere('p.playlist_id = :val')
+               ->setParameter('val', $id)
+               ->getQuery()
+               ->getOneOrNullResult()
+           ;
+       }
 }

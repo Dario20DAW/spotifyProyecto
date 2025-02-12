@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let navPlaylist = document.getElementById('navPlaylist');
     
     
-    
+    function verPlaylist(){
         let parrafo = document.createElement('h1');
         parrafo.textContent = "Tus Playlist";
         parrafo.classList.add('tituloContenido');
@@ -40,5 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
             }
         })
+    }
 
-    })
+    verPlaylist();
+})

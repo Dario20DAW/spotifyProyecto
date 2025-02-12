@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Playlist;
 use App\Entity\Usuario;
 use Doctrine\ORM\EntityManager;
@@ -54,11 +55,36 @@ final class PlaylistController extends AbstractController
         $playlists = $playlistRep->findAll();
         $nombrePlaylist = [];
 
-        foreach($playlists as $playlist){
-            $nombrePlaylist[] = [ 
-             'nombre' => $playlist->getNombre()
+        foreach ($playlists as $playlist) {
+            $nombrePlaylist[] = [
+                'nombre' => $playlist->getNombre()
             ];
         }
         return $this->json($nombrePlaylist);
+    }
+
+
+
+
+    #[Route('/playlist/{playlistName}/find', name: 'app_buscar_playlists', methods: ['GET'])]
+    public function buscarPlaylist(EntityManagerInterface $entityManager, string $playlistName): JsonResponse
+    {
+        $playlistRep = $entityManager->getRepository(Playlist::class);
+        $playlist = $playlistRep->findOneByNombre($playlistName);
+
+        $jsonResultado = [
+            'nombrePlaylist' => $playlist->getNombre(),
+            'canciones' => []
+        ];
+
+        foreach ($playlist->getPlaylistCancions() as $playlistCancion) {
+            $jsonResultado['canciones'][] = [
+                'id' => $playlistCancion->getCancion()->getId(),
+                'titulo' => $playlistCancion->getCancion()->getTitulo(),
+                'artista' => $playlistCancion->getCancion()->getAutor()
+            ];
+        }
+
+        return $this->json($jsonResultado);
     }
 }
