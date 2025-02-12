@@ -72,13 +72,10 @@ final class PlaylistController extends AbstractController
         $playlistRep = $entityManager->getRepository(Playlist::class);
         $playlist = $playlistRep->findOneByNombre($playlistName);
 
-        $jsonResultado = [
-            'nombrePlaylist' => $playlist->getNombre(),
-            'canciones' => []
-        ];
+        $jsonResultado = [];
 
         foreach ($playlist->getPlaylistCancions() as $playlistCancion) {
-            $jsonResultado['canciones'][] = [
+            $jsonResultado[] = [
                 'id' => $playlistCancion->getCancion()->getId(),
                 'titulo' => $playlistCancion->getCancion()->getTitulo(),
                 'artista' => $playlistCancion->getCancion()->getAutor()

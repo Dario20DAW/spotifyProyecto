@@ -64,6 +64,7 @@ function verCanciones(){
 
                 let nombreCancion = cancion.titulo + ".mp3"; 
                 let audioSrc = `/cancion/${nombreCancion}/play`; //enlazamos con el controller y nos devuelve el binario de la cancion
+                
 
                 audioPlayer.src = audioSrc; //ponemos el binario en el src del reproductor
                 audioPlayer.style.visibility = 'visible';
