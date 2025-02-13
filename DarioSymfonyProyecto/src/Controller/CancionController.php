@@ -61,7 +61,8 @@ final class CancionController extends AbstractController
         foreach($canciones as $cancion){
             $cancionTitulo[] = [ 
              'titulo' => $cancion->getTitulo(),
-             'autor' => $cancion->getAutor()
+             'autor' => $cancion->getAutor(),
+             'portada' => $cancion->getImagenCancion()
             ];
         }
         return $this->json($cancionTitulo);

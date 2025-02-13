@@ -44,7 +44,7 @@ function verCanciones(){
 
         for (let cancion of canciones) {
             let img = document.createElement('img');
-            img.src = './imagenes/cover.png';
+            img.src = cancion.portada;
             img.classList.add('imgMusica');
 
             let divCancion = document.createElement('div');

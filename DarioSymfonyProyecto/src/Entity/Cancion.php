@@ -50,6 +50,9 @@ class Cancion
     #[ORM\ManyToMany(targetEntity: Usuario::class, mappedBy: 'canciones')]
     private Collection $usuarios;
 
+    #[ORM\Column(length: 255)]
+    private ?string $imagenCancion = null;
+
 
 
     public function __construct()
@@ -208,5 +211,17 @@ class Cancion
     public function __toString(): string
     {
         return $this->titulo;
+    }
+
+    public function getImagenCancion(): ?string
+    {
+        return $this->imagenCancion;
+    }
+
+    public function setImagenCancion(string $imagenCancion): static
+    {
+        $this->imagenCancion = $imagenCancion;
+
+        return $this;
     }
 }

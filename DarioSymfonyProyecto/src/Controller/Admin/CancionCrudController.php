@@ -27,6 +27,7 @@ class CancionCrudController extends AbstractCrudController
             TextField::new('autor', 'Autor'),
             IntegerField::new('reproducciones', 'Reproducciones'),
             IntegerField::new('likes', 'Likes'),
+            TextField::new('imagenCancion', 'Portada de la cancion'),
             AssociationField::new('genero', 'Género') 
         ];
     }
