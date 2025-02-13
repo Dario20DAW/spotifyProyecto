@@ -1,9 +1,29 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     let playAudio = document.getElementById('audioPlayer');
-    let footer = document.querySelector('footer');
+
     let navCanciones = document.getElementById('navCanciones');
     let navPlaylist = document.getElementById('navPlaylist');
+    let footer = document.getElementById('footer');
+    let tituloFooter = document.getElementById('tituloFooter');
+    let autorFooter = document.getElementById('autorFooter');
+    let audioPlayer = document.getElementById('audioPlayer');
+
+
+    if (!tituloFooter) {
+        tituloFooter = document.createElement('p');
+        tituloFooter.id = 'tituloFooter';
+        tituloFooter.classList.add('textoCancion');
+        footer.appendChild(tituloFooter);
+    }
+
+    if (!autorFooter) {
+        autorFooter = document.createElement('p');
+        autorFooter.id = 'autorFooter';
+        autorFooter.classList.add('textoCancion');
+        footer.appendChild(autorFooter);
+    }
+
 
 
     function verPlaylist() {
@@ -44,8 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                         fetch(`playlist/${p.nombre}/find`)
-                        .then(response => response.json())
-                        .then(cancionesPlaylist => {
+                            .then(response => response.json())
+                            .then(cancionesPlaylist => {
+
+
+
 
                                 let parrafo2 = document.createElement('h1');
                                 parrafo2.textContent = (`Canciones de la playlist: ${p.nombre}`);
@@ -85,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                         audioPlayer.play(); //esto hace que cuando pinches inicie la reproduccion automaticamente
                                     });
                                 }
-                        })
+                            })
                     })
                 }
             })

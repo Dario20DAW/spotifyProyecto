@@ -78,7 +78,8 @@ final class PlaylistController extends AbstractController
             $jsonResultado[] = [
                 'id' => $playlistCancion->getCancion()->getId(),
                 'titulo' => $playlistCancion->getCancion()->getTitulo(),
-                'artista' => $playlistCancion->getCancion()->getAutor()
+                'artista' => $playlistCancion->getCancion()->getAutor(),
+                'portada' => $playlistCancion->getCancion()->getImagenCancion()
             ];
         }
 
