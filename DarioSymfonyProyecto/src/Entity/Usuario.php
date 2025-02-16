@@ -7,53 +7,48 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $nombre = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $fechaNacimiento = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Perfil $perfil = null;
 
-    /**
-     * @var Collection<int, Playlist>
-     */
+    #[ORM\Column(type: "json")]
+    private array $roles = [];
+
     #[ORM\OneToMany(targetEntity: Playlist::class, mappedBy: 'propietario')]
     private Collection $playlists;
 
-    /**
-     * @var Collection<int, UsuarioPlaylist>
-     */
     #[ORM\OneToMany(targetEntity: UsuarioPlaylist::class, mappedBy: 'usuario')]
     private Collection $usuarioPlaylists;
 
-    /**
-     * @var Collection<int, Cancion>
-     */
-    // En Usuario
     #[ORM\ManyToMany(targetEntity: Cancion::class, inversedBy: 'usuarios')]
     private Collection $canciones;
 
-
-
     public function __construct()
     {
+        $this->roles = ['ROLE_USER']; // Asegurar que siempre tenga al menos un rol
         $this->playlists = new ArrayCollection();
         $this->usuarioPlaylists = new ArrayCollection();
         $this->canciones = new ArrayCollection();
@@ -72,7 +67,25 @@ class Usuario
     public function setEmail(string $email): static
     {
         $this->email = $email;
+        return $this;
+    }
 
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getRoles(): array
+    {
+        return array_unique($this->roles);
+    }
+
+    public function setRoles(array $roles): static
+    {
+        if (!in_array('ROLE_USER', $roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+        $this->roles = $roles;
         return $this;
     }
 
@@ -84,19 +97,19 @@ class Usuario
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
+
+    public function eraseCredentials(): void {}
 
     public function getNombre(): ?string
     {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): static
+    public function setNombre(?string $nombre): static
     {
         $this->nombre = $nombre;
-
         return $this;
     }
 
@@ -105,10 +118,9 @@ class Usuario
         return $this->fechaNacimiento;
     }
 
-    public function setFechaNacimiento(\DateTimeInterface $fechaNacimiento): static
+    public function setFechaNacimiento(?\DateTimeInterface $fechaNacimiento): static
     {
         $this->fechaNacimiento = $fechaNacimiento;
-
         return $this;
     }
 
@@ -120,13 +132,9 @@ class Usuario
     public function setPerfil(?Perfil $perfil): static
     {
         $this->perfil = $perfil;
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Playlist>
-     */
     public function getPlaylists(): Collection
     {
         return $this->playlists;
@@ -138,25 +146,19 @@ class Usuario
             $this->playlists->add($playlist);
             $playlist->setPropietario($this);
         }
-
         return $this;
     }
 
     public function removePlaylist(Playlist $playlist): static
     {
         if ($this->playlists->removeElement($playlist)) {
-            // set the owning side to null (unless already changed)
             if ($playlist->getPropietario() === $this) {
                 $playlist->setPropietario(null);
             }
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, UsuarioPlaylist>
-     */
     public function getUsuarioPlaylists(): Collection
     {
         return $this->usuarioPlaylists;
@@ -168,25 +170,19 @@ class Usuario
             $this->usuarioPlaylists->add($usuarioPlaylist);
             $usuarioPlaylist->setUsuario($this);
         }
-
         return $this;
     }
 
     public function removeUsuarioPlaylist(UsuarioPlaylist $usuarioPlaylist): static
     {
         if ($this->usuarioPlaylists->removeElement($usuarioPlaylist)) {
-            // set the owning side to null (unless already changed)
             if ($usuarioPlaylist->getUsuario() === $this) {
                 $usuarioPlaylist->setUsuario(null);
             }
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Cancion>
-     */
     public function getCanciones(): Collection
     {
         return $this->canciones;
@@ -197,14 +193,12 @@ class Usuario
         if (!$this->canciones->contains($cancione)) {
             $this->canciones->add($cancione);
         }
-
         return $this;
     }
 
     public function removeCancione(Cancion $cancione): static
     {
         $this->canciones->removeElement($cancione);
-
         return $this;
     }
 }
