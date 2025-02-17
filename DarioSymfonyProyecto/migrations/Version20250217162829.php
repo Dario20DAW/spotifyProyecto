@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250216163721 extends AbstractMigration
+final class Version20250217162829 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,13 +21,13 @@ final class Version20250216163721 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE usuario CHANGE nombre nombre VARCHAR(255) DEFAULT NULL, CHANGE fecha_nacimiento fecha_nacimiento DATE DEFAULT NULL');
-        $this->addSql('ALTER TABLE usuario RENAME INDEX uniq_2265b05de7927c74 TO UNIQ_IDENTIFIER_EMAIL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON usuario (email)');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('DROP INDEX UNIQ_IDENTIFIER_EMAIL ON usuario');
         $this->addSql('ALTER TABLE usuario CHANGE nombre nombre VARCHAR(255) NOT NULL, CHANGE fecha_nacimiento fecha_nacimiento DATE NOT NULL');
-        $this->addSql('ALTER TABLE usuario RENAME INDEX uniq_identifier_email TO UNIQ_2265B05DE7927C74');
     }
 }
