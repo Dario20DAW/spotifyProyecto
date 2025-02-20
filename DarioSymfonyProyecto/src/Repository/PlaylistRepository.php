@@ -31,13 +31,32 @@ class PlaylistRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-       public function findOneByNombre($nombre): ?Playlist
-       {
-           return $this->createQueryBuilder('p')
-               ->andWhere('p.nombre = :val')
-               ->setParameter('val', $nombre)
-               ->getQuery()
-               ->getOneOrNullResult()
-           ;
-       }
+    public function findOneByNombre($nombre): ?Playlist
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.nombre = :val')
+            ->setParameter('val', $nombre)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+
+    public function getPlaylistsPorLikes(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.nombre, p.likes')
+            ->orderBy('p.likes', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getPlaylistsPorReproducciones(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.nombre, p.reproducciones')
+            ->orderBy('p.reproducciones', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

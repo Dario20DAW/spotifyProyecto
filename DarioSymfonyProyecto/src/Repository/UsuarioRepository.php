@@ -58,4 +58,12 @@ class UsuarioRepository extends ServiceEntityRepository implements UserLoaderInt
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function getDistribucionEdadesUsuarios(): array
+{
+    return $this->createQueryBuilder('u')
+        ->select('u.fechaNacimiento')
+        ->getQuery()
+        ->getResult();
+}
 }

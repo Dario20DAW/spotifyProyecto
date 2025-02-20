@@ -42,7 +42,7 @@ class Playlist
      */
     #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'playlist', cascade: ['persist','remove'])]
     private Collection $playlistCancions;
-
+ 
     public function __construct()
     {
         $this->usuarioPlaylists = new ArrayCollection();

@@ -31,21 +31,41 @@ class CancionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-       public function findOneByTitulo($titulo): ?Cancion
-       {
-           return $this->createQueryBuilder('c')
-               ->andWhere('c.titulo = :val')
-               ->setParameter('val', $titulo)
-               ->getQuery()
-               ->getOneOrNullResult()
-           ;
-       }
+    public function findOneByTitulo($titulo): ?Cancion
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.titulo = :val')
+            ->setParameter('val', $titulo)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
 
-       public function findAll(): array
-       {
-           return $this->createQueryBuilder('c')
-               ->getQuery()
-               ->getResult()
-           ;
-       }
+    public function findAll(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    public function getCancionesMasReproducidas(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c.titulo, c.reproducciones')
+            ->orderBy('c.reproducciones', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getReproduccionesPorEstilo(): array
+    {
+        return $this->createQueryBuilder('c')
+            ->select('e.nombre AS estilo, SUM(c.reproducciones) AS totalReproducciones')
+            ->join('c.genero', 'e')
+            ->groupBy('e.nombre')
+            ->getQuery()
+            ->getResult();
+    }
 }
