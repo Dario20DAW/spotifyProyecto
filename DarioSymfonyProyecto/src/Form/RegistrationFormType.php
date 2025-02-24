@@ -38,14 +38,6 @@ class RegistrationFormType extends AbstractType
                 'multiple' => true, 
                 'required' => true,
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'Acepta los terminos',
-                    ]),
-                ],
-            ])
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],

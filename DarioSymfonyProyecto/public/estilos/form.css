@@ -1,0 +1,71 @@
+/* Estilos generales */
+body {
+    background-color:  rgb(41, 40, 40);
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor de los formularios */
+.form-container {
+    width: 60%;
+    max-width: 640px;
+    background-color: rgb(31, 26, 26);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(243, 242, 242, 0.1);
+    text-align: center;
+}
+
+/* Estilos para los encabezados */
+h1, h2 {
+    color:  rgb(238, 40, 40);
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Estilos para los labels */
+label {
+    display: block;
+    text-align: left;
+    font-weight: 500;
+    margin-top: 20px;
+    color: #ffffff;
+}
+
+/* Estilos para los campos de entrada */
+input, select {
+    width: 95%;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+/* Estilo para el botón */
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color:  rgb(238, 40, 40);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn:hover {
+    background-color: #d31919;
+}
+
+/* Estilo para los mensajes de error */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
