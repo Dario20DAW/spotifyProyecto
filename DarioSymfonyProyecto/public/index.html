@@ -17,13 +17,14 @@
 
         <div id="Busqueda">
             <input type="text" placeholder="¿Que quieres reproducir?" id="campoBuscar">
-            <input type="button" name="" id="" value="Buscar">
+            <input type="button" name="" id="botonBuscar" value="Buscar">
         </div>
 
         <div id="SimboloLogIn">
             <img src="./imagenes/acceso.png" alt="" id="SimboloLogIn" ><br>
-            <a href="/login">Login</a><br>
-            <a href="/register/">Registro</a>
+            <a href="/login" id="eLogin">Login</a><br>
+            <a href="/register/" id="eRegistro">Registro</a>
+            <a href="/logout/" id="eLogout" style="display: none;">Logout</a>
         </div>
     </header>
 
@@ -34,10 +35,9 @@
                     Tu Biblioteca</a><br>
 
                 <div id="navSeparado">
-                    <a href="./canciones.html" id="navCanciones"><img src="./imagenes/musica (3).png" alt="">
-                        Canciones</a><br>
-                    <a href="./playlist.html" id="navPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt="">
-                        Playlist</a>
+                    <a href="./canciones.html" id="navCanciones"><img src="./imagenes/musica (3).png" alt=""> Ver Canciones</a><br>
+                    <a href="./playlist.html" id="navPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt=""> Ver Playlist</a><br>
+                    <a href="/playlist/crear" style="display: none;" id="crearPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt=""> Crear Playlist</a>
                 </div>
             </div>
         </nav>
@@ -45,8 +45,10 @@
 
             </div> <br>
 
-            <div id="contenidoCanciones">
-        </div>
+            <div id="contenidoCanciones"><br>
+            </div>
+            <div id="contenidoPlaylistUsuario">
+            </div>
     </div>
 
     <footer id="footer">
@@ -58,7 +60,7 @@
 
     <script src="./script/scriptPlaylist.js"></script>
     <script src="./script/scriptCancion.js"></script>
-    <script src="./script/scriptBusqueda.js"></script>
+    <script src="./script/scriptIndex.js"></script>
 </body>
 
 </html>

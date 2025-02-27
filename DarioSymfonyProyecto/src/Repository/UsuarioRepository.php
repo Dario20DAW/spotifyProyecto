@@ -24,11 +24,11 @@ class UsuarioRepository extends ServiceEntityRepository implements UserLoaderInt
 
 
 
-    public function findOneByNombre($nombre): ?Usuario
+    public function findOneByEmail($email): ?Usuario
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.nombre = :val')
-            ->setParameter('val', $nombre)
+            ->andWhere('u.email = :val')
+            ->setParameter('val', $email)
             ->getQuery()
             ->getOneOrNullResult();
     }

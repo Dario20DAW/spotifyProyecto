@@ -19,8 +19,8 @@ class UsuarioPlaylist
     #[ORM\ManyToOne(inversedBy: 'usuarioPlaylists')]
     private ?Playlist $playlist = null;
 
-    #[ORM\Column]
-    private ?int $reproducida = null;
+    #[ORM\Column(nullable: true)]
+    private ?int $reproducida = null;       
 
     public function getId(): ?int
     {

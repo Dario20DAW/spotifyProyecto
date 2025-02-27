@@ -4,14 +4,21 @@ namespace App\Controller;
 
 use App\Entity\Playlist;
 use App\Entity\Usuario;
-use Doctrine\ORM\EntityManager;
+use App\Entity\PlaylistCancion;
+use App\Entity\UsuarioPlaylist;
+use App\Form\PlaylistType; 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Security;
 
 final class PlaylistController extends AbstractController
 {
+
+
     #[Route('/playlist', name: 'app_playlist')]
     public function index(): JsonResponse
     {
@@ -53,14 +60,16 @@ final class PlaylistController extends AbstractController
     {
         $playlistRep = $entityManager->getRepository(Playlist::class);
         $playlists = $playlistRep->findAll();
-        $nombrePlaylist = [];
+        $datosPlaylist = [];
 
         foreach ($playlists as $playlist) {
-            $nombrePlaylist[] = [
-                'nombre' => $playlist->getNombre()
+            $datosPlaylist[] = [
+                'nombre' => $playlist->getNombre(),
+                'propietario' => $playlist->getPropietario()->getId(),
+                'rolPropietario' => $playlist->getPropietario()->getRoles()
             ];
         }
-        return $this->json($nombrePlaylist);
+        return $this->json($datosPlaylist);
     }
 
 
@@ -74,7 +83,7 @@ final class PlaylistController extends AbstractController
 
         $jsonResultado = [];
 
-        foreach ($playlist->getPlaylistCancions() as $playlistCancion) {
+        foreach ($playlist->getPlaylistCanciones() as $playlistCancion) {
             $jsonResultado[] = [
                 'id' => $playlistCancion->getCancion()->getId(),
                 'titulo' => $playlistCancion->getCancion()->getTitulo(),
@@ -84,6 +93,66 @@ final class PlaylistController extends AbstractController
         }
 
         return $this->json($jsonResultado);
+    }
+
+
+
+    #[Route('/playlist/crear', name: 'app_crear_playlist')]
+    public function crearPlaylistForm(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $playlist = new Playlist();
+        $form = $this->createForm(PlaylistType::class, $playlist);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+
+            // Obtener el usuario actual
+            $UsuarioRep = $entityManager->getRepository(Usuario::class);
+            $session = $request->getSession();
+
+
+            $email = $session->get('_security.last_username', null);
+            $usuario = $UsuarioRep->findOneByEmail($email);
+            
+
+            // Asignar el propietario de la playlist
+            $playlist->setPropietario($usuario);
+
+            // Obtener las canciones seleccionadas
+            $canciones = $form->get('canciones')->getData();
+
+            // Crear las entidades PlaylistCancion para cada canción seleccionada
+            foreach ($canciones as $cancion) {
+                $playlistCancion = new PlaylistCancion();
+                $playlistCancion->setPlaylist($playlist);
+                $playlistCancion->setCancion($cancion);
+                $entityManager->persist($playlistCancion);
+            }
+
+            // Guardar la playlist en la base de datos
+            $playlist->setReproducciones(0);
+            $playlist->setLikes(0);
+            $entityManager->persist($playlist);
+            $entityManager->flush();
+
+
+            //Guardar playlist y propietario
+            $UsuarioPlaylist = new UsuarioPlaylist();
+            $UsuarioPlaylist->setUsuario($usuario);
+            $UsuarioPlaylist->setPlaylist($playlist);
+            $UsuarioPlaylist->setReproducida(0);
+            $entityManager->persist($UsuarioPlaylist);
+            $entityManager->flush();
+
+            // Redirigir a alguna página de éxito
+            return $this->redirect('/');
+        }
+
+        return $this->render('playlist/crear.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 }

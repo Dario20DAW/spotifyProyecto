@@ -101,7 +101,7 @@ class EstadisticasController extends AbstractController
             '46 o más' => 0,
         ];
     
-        // Clasificar edades en los rangos correctos
+
         foreach ($edades as $edad) {
             if ($edad <= 18) {
                 $rangos['0-18']++;

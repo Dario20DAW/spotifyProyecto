@@ -18,13 +18,16 @@ class Playlist
     #[ORM\Column(length: 255)]
     private ?string $nombre = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $visibilidad = null;
+    
+    #[ORM\Column(type: "boolean")]
+    private bool $visibilidad = false;
 
     #[ORM\Column]
+    #[ORM\JoinColumn(nullable: true)]
     private ?int $reproducciones = null;
 
     #[ORM\Column]
+    #[ORM\JoinColumn(nullable: true)]
     private ?int $likes = null;
 
     #[ORM\ManyToOne(inversedBy: 'playlists')]
@@ -41,12 +44,12 @@ class Playlist
      * @var Collection<int, PlaylistCancion>
      */
     #[ORM\OneToMany(targetEntity: PlaylistCancion::class, mappedBy: 'playlist', cascade: ['persist','remove'])]
-    private Collection $playlistCancions;
+    private Collection $playlistCanciones;
  
     public function __construct()
     {
         $this->usuarioPlaylists = new ArrayCollection();
-        $this->playlistCancions = new ArrayCollection();
+        $this->playlistCanciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,12 +69,12 @@ class Playlist
         return $this;
     }
 
-    public function getVisibilidad(): ?string
+    public function getVisibilidad(): bool
     {
         return $this->visibilidad;
     }
 
-    public function setVisibilidad(string $visibilidad): static
+    public function setVisibilidad(bool $visibilidad): self
     {
         $this->visibilidad = $visibilidad;
 
@@ -147,15 +150,15 @@ class Playlist
     /**
      * @return Collection<int, PlaylistCancion>
      */
-    public function getPlaylistCancions(): Collection
+    public function getPlaylistCanciones(): Collection
     {
-        return $this->playlistCancions;
+        return $this->playlistCanciones;
     }
 
     public function addPlaylistCancion(PlaylistCancion $playlistCancion): static
     {
-        if (!$this->playlistCancions->contains($playlistCancion)) {
-            $this->playlistCancions->add($playlistCancion);
+        if (!$this->playlistCanciones->contains($playlistCancion)) {
+            $this->playlistCanciones->add($playlistCancion);
             $playlistCancion->setPlaylist($this);
         }
 
@@ -164,7 +167,7 @@ class Playlist
 
     public function removePlaylistCancion(PlaylistCancion $playlistCancion): static
     {
-        if ($this->playlistCancions->removeElement($playlistCancion)) {
+        if ($this->playlistCanciones->removeElement($playlistCancion)) {
             // set the owning side to null (unless already changed)
             if ($playlistCancion->getPlaylist() === $this) {
                 $playlistCancion->setPlaylist(null);
