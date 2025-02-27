@@ -59,7 +59,7 @@ final class PlaylistController extends AbstractController
     public function verPlaylists(EntityManagerInterface $entityManager): JsonResponse
     {
         $playlistRep = $entityManager->getRepository(Playlist::class);
-        $playlists = $playlistRep->findAll();
+        $playlists = $playlistRep->findConPropietario();
         $datosPlaylist = [];
 
         foreach ($playlists as $playlist) {
