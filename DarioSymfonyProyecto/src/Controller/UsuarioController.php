@@ -72,7 +72,9 @@ final class UsuarioController extends AbstractController
     
         return $this->json(['id' => $usuarioId]);
     }
-    #[Route('/usuario/mostrarRol/{email}', name: 'app_obtener_idUsuario')]
+
+
+    #[Route('/usuario/mostrarRol/{email}', name: 'app_obtener_RolUsuario')]
     public function obtenerUsuarioRol(EntityManagerInterface $e, string $email ): JsonResponse
     {
        

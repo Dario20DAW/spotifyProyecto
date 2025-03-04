@@ -64,11 +64,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     se le mostrarian, si no, solo le saldrian las playlist por defecto*/ 
 
 
-                    if (p.rolPropietario == "ROLE_ADMIN") {
+                    if (p.rolPropietario == null) {
 
                         grupoPlaylistAdmin.appendChild(divPlaylist);
                         document.getElementById('contenidoPlaylist').appendChild(grupoPlaylistAdmin);
-                        console.log(p.rolPropietario);
+                        console.log(p.rolPropietario + "azfahfjahflkajfhladfkj");
                     }
                     else if (p.rolPropietario == "ROLE_USER") {
                         fetch('/getSession')
