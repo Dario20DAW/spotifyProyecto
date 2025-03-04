@@ -40,13 +40,15 @@ class PlaylistRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    public function findConPropietario(): array
+
+
+    public function findAllPlaylists(): array
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.nombre = :val')
-            ->andWhere('p.propietario IS NOT NULL')  // Asegúrate de que propietario no sea NULL
+            ->leftJoin('p.propietario', 'u') // Hacer un LEFT JOIN para evitar errores si no hay propietario
+            ->addSelect('u') // Seleccionar también el propietario
             ->getQuery()
-            ->getResult();  // Devuelve un array con los resultados
+            ->getResult();
     }
 
 

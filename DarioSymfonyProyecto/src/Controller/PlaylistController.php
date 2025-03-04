@@ -6,7 +6,7 @@ use App\Entity\Playlist;
 use App\Entity\Usuario;
 use App\Entity\PlaylistCancion;
 use App\Entity\UsuarioPlaylist;
-use App\Form\PlaylistType; 
+use App\Form\PlaylistType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -59,16 +59,20 @@ final class PlaylistController extends AbstractController
     public function verPlaylists(EntityManagerInterface $entityManager): JsonResponse
     {
         $playlistRep = $entityManager->getRepository(Playlist::class);
-        $playlists = $playlistRep->findConPropietario();
+        $playlists = $playlistRep->findAllPlaylists();
+
         $datosPlaylist = [];
 
         foreach ($playlists as $playlist) {
+            $propietario = $playlist->getPropietario();
+
             $datosPlaylist[] = [
                 'nombre' => $playlist->getNombre(),
-                'propietario' => $playlist->getPropietario()->getId(),
-                'rolPropietario' => $playlist->getPropietario()->getRoles()
+                'propietario' => $propietario ? $propietario->getId() : null,
+                'rolPropietario' => $propietario ? $propietario->getRoles() : null
             ];
         }
+
         return $this->json($datosPlaylist);
     }
 
@@ -115,7 +119,7 @@ final class PlaylistController extends AbstractController
 
             $email = $session->get('_security.last_username', null);
             $usuario = $UsuarioRep->findOneByEmail($email);
-            
+
 
             // Asignar el propietario de la playlist
             $playlist->setPropietario($usuario);
@@ -154,5 +158,4 @@ final class PlaylistController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

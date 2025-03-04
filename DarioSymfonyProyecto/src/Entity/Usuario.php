@@ -77,7 +77,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return array_unique($this->roles);
+        return array($this->roles);
     }
 
     public function setRoles(array $roles): static
