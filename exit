@@ -1,0 +1,36 @@
+[33mbbbdca2[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m log inicio sesion y crear playlist
+[33m08a6193[m solucion logout
+[33m638d728[m creo que esta solcuionado
+[33m9080a86[m cambiar consulta
+[33m39891a8[m Delete DarioSymfonyProyecto/DarioSymfonyProyecto6ª.zip
+[33m5cb9634[m Delete DarioSymfonyProyecto/DarioSymfonyProyecto3ª.zip
+[33mb609481[m Delete DarioSymfonyProyecto/DarioSymfonyProyecto.rar
+[33m0ad1941[m Delete ImagenesProceso directory
+[33meb65a57[m Barra busqueda, crear playlist, mostrar playlist de cada usuario
+[33m6772cc2[m estilos en form
+[33mcb89020[m cambios estilo graficos
+[33maec162e[m rol manager con acceso a /estadisticas
+[33m0bddca1[m graficos hechos, sin estilo
+[33me8799a6[m verificacion de rol, y añadimos rol manager
+[33m33ffcd5[m cambios logout clase
+[33ma75fc5a[m registro y login
+[33m80ea94f[m modificacion estilos
+[33m66c6dc5[m Update README.md
+[33m12702bc[m Rename indexBaseReproductor.PNG to indexReproductor.PNG
+[33mcf2b5c2[m Update README.md
+[33m483b217[m canciones con portada
+[33m4c0ece7[m entrega ver canciones_playlist sin estilos
+[33m64dcd26[m Consulta creada en controller cancion
+[33mb96c6a4[m cambios clase martes
+[33mcbb3bbb[m cambios clase
+[33mb2ce77a[m correccion README
+[33m516f49c[m reproductor funciona correctamente
+[33mf80edb3[m IndexBase sin completar
+[33mc23b321[m index en proceso
+[33m08cab49[m cambios readme
+[33m24a512b[m Crud de Playlist y cambios README
+[33mab3aae9[m Cambios clase 04 febrero
+[33m2cf4e7d[m creacion de cancion con genero en dashboard
+[33m88edcd3[m cambio diagrama y README
+[33m470f59c[m Cambios de relaciones y dashboard
+[33mce924e3[m subida con dashboard

@@ -122,12 +122,14 @@ final class PlaylistController extends AbstractController
 
             $email = $session->get('_security.last_username', null);
             $usuario = $UsuarioRep->findOneByEmail($email);
+
             $fecha = new \DateTime();
             
             $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $usuario . " ha creado una playlist: " . $playlist->getNombre();
             
             // Registrar el log
             $logger->debug($mensajeLog);
+
 
 
             // Asignar el propietario de la playlist
@@ -167,5 +169,4 @@ final class PlaylistController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }
