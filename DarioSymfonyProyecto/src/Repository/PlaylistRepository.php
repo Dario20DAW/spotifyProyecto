@@ -52,17 +52,6 @@ class PlaylistRepository extends ServiceEntityRepository
 
 
 
-    public function findAllPlaylists(): array
-    {
-        return $this->createQueryBuilder('p')
-            ->leftJoin('p.propietario', 'u') // Hacer un LEFT JOIN para evitar errores si no hay propietario
-            ->addSelect('u') // Seleccionar también el propietario
-            ->getQuery()
-            ->getResult();
-    }
-
-
-
     public function getPlaylistsPorLikes(): array
     {
         return $this->createQueryBuilder('p')

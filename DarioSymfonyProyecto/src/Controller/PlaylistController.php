@@ -125,7 +125,7 @@ final class PlaylistController extends AbstractController
 
             $fecha = new \DateTime();
             
-            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $usuario . " ha creado una playlist: " . $playlist->getNombre();
+            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $usuario->getEmail() . " ha creado la playlist: " . $playlist->getNombre();
             
             // Registrar el log
             $logger->debug($mensajeLog);

@@ -76,16 +76,16 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getRoles(): array
-    {
-        return array($this->roles);
-    }
+{
+    // Asegurarse de que siempre se devuelve un array, incluso si solo hay un rol
+    return (array) $this->roles; // Convierte a array si $this->roles es un string
+}
 
-    public function setRoles(array $roles): static
-    {
-
-        $this->roles = $roles;
-        return $this;
-    }
+public function setRoles(array $roles): static
+{
+    $this->roles = $roles;
+    return $this;
+}
 
     public function getPassword(): ?string
     {

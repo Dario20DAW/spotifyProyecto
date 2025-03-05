@@ -19,12 +19,14 @@ final class LoginController extends AbstractController
 
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-
         $fecha = new \DateTime();
-            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $lastUsername . " ha iniciado sesión";
 
+
+        
+        $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $lastUsername . " ha iniciado sesión";
             
-         $logger->debug($mensajeLog);
+        $logger->debug($mensajeLog);
+        
 
         return $this->render('login/index.html.twig', [
             'controller_name' => 'LoginController',
