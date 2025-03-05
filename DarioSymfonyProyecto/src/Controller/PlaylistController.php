@@ -14,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Psr\Log\LoggerInterface;
+
 
 final class PlaylistController extends AbstractController
 {
@@ -102,7 +104,7 @@ final class PlaylistController extends AbstractController
 
 
     #[Route('/playlist/crear', name: 'app_crear_playlist')]
-    public function crearPlaylistForm(Request $request, EntityManagerInterface $entityManager): Response
+    public function crearPlaylistForm(Request $request, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
     {
         $playlist = new Playlist();
         $form = $this->createForm(PlaylistType::class, $playlist);
@@ -111,6 +113,7 @@ final class PlaylistController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            
 
             // Obtener el usuario actual
             $UsuarioRep = $entityManager->getRepository(Usuario::class);
@@ -119,6 +122,12 @@ final class PlaylistController extends AbstractController
 
             $email = $session->get('_security.last_username', null);
             $usuario = $UsuarioRep->findOneByEmail($email);
+            $fecha = new \DateTime();
+            
+            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $usuario . " ha creado una playlist: " . $playlist->getNombre();
+            
+            // Registrar el log
+            $logger->debug($mensajeLog);
 
 
             // Asignar el propietario de la playlist
@@ -158,4 +167,5 @@ final class PlaylistController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
 }

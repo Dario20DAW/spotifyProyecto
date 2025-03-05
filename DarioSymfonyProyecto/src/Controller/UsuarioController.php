@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Perfil;
 use App\Entity\Usuario;
+use Psr\Log\LoggerInterface;
 use DateTime;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +24,7 @@ final class UsuarioController extends AbstractController
         ]);
     }
 
-    #[Route('/usuario/new', name: 'app_usuario_crear')]
+   /*  #[Route('/usuario/new', name: 'app_usuario_crear')]
     public function crearUsuario(EntityManagerInterface $entityManager): JsonResponse
     {
         $usuario = new Usuario();
@@ -46,7 +47,7 @@ final class UsuarioController extends AbstractController
             'message' => 'usuario creado',
             'path' => 'src/Controller/UsuarioController.php',
         ]);
-    }
+    } */
 
 
     #[Route('/getSession', name: 'app_obtener_sesion')]
@@ -54,10 +55,12 @@ final class UsuarioController extends AbstractController
     {
         $session = $request->getSession();
 
-        $email = $session->get('_security.last_username', null); 
-    
+        $email = $session->get('_security.last_username', null);
+
         return $this->json(['email' => $email]);
     }
+
+
 
 
     #[Route('/usuario/mostrarId/{email}', name: 'app_obtener_idUsuario')]
