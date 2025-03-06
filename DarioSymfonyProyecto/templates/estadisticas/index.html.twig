@@ -2,237 +2,222 @@
 
 {% block title %}Estadísticas{% endblock %}
 
-
 {% block body %}
 <div class="container">
-    <h1>Estadísticas</h1>
+    <div class="charts-wrapper">
+        <div class="chart-container">
+            <h2>Playlist y likes</h2>
+            <canvas id="playlistLikesChart"></canvas>
+        </div>
 
-    <!-- Gráfico 1: Playlist con más likes -->
-    <div class="chart-container">
-        <h2>Playlist y likes</h2>
-        <canvas id="playlistLikesChart"></canvas>
-    </div><br>
+        <div class="chart-container">
+            <h2>Playlist y reproducciones</h2>
+            <canvas id="playlistReproduccionesChart"></canvas>
+        </div>
 
-    <!-- Gráfico 2: Playlist con más reproducciones -->
-    <div class="chart-container">
-        <h2>Playlist y reproducciones</h2>
-        <canvas id="playlistReproduccionesChart"></canvas>
-    </div><br>
+        <div class="chart-container">
+            <h2>Gráfico de usuarios por edad</h2>
+            <canvas id="usuarioEdadesChart"></canvas>
+        </div>
 
-    <!-- Gráfico 3: Distribución de edades de usuarios -->
-    <div class="chart-container">
-        <h2>Grafico de usuarios por edad</h2>
-        <canvas id="usuarioEdadesChart"></canvas>
-    </div><br>
+        <div class="chart-container">
+            <h2>Canciones y reproducciones</h2>
+            <canvas id="cancionReproduccionesChart"></canvas>
+        </div>
 
-    <!-- Gráfico 4: Canciones más reproducidas -->
-    <div class="chart-container">
-        <h2>Canciones y reproducciones</h2>
-        <canvas id="cancionReproduccionesChart"></canvas>
-    </div><br>
-
-    <!-- Gráfico 5: Distribución de reproducción por estilos -->
-    <div class="chart-container">
-        <h2>Comparacion de estilos en base a reproducciones</h2>
-        <canvas id="estiloReproduccionesChart"></canvas>
-    </div><br>
+        <div class="chart-container">
+            <h2>Comparación de estilos en base a reproducciones</h2>
+            <canvas id="estiloReproduccionesChart"></canvas>
+        </div>
+    </div>
 </div>
 
-
 <style>
-
-.chart-container {
-    width: 60% !important;
-    height: 600px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: block;
-    justify-content: center;
-
+/* Contenedor principal de los gráficos */
+.charts-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
+    grid-template-rows: repeat(2, auto); /* 2 filas */
+    gap: 15px;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 20px 0;
 }
 
-    h1 {
-        text-align: center;
-        font-size: 2.5rem;
-        margin-bottom: 40px;
-        color: #333;
-    }
+/* Ajustar el último gráfico para centrarlo en la segunda fila */
+.chart-container:nth-child(4) {
+    grid-column: 2 / 3; /* Poner en la segunda columna de la segunda fila */
+}
 
-    h2 {
-        font-size: 1.8rem;
-        color: #555;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
+/* Configuración base de los gráficos */
+.chart-container {
+    height: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #555;
+}
 
+/* Ajustar el tamaño de los gráficos */
+canvas {
+    width: 100% !important;
+    height: 320px !important;
+}
 
-    /* Fondo de la página */
-    body {
-        background-color: #f4f7fc;
-        color: #333;
+/* Responsividad */
+@media (max-width: 1200px) {
+    .charts-wrapper {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+        grid-template-rows: repeat(3, auto);
     }
+    .chart-container:nth-child(4) {
+        grid-column: auto; /* Vuelve a flujo normal */
+    }
+}
+
+@media (max-width: 768px) {
+    .charts-wrapper {
+        grid-template-columns: repeat(1, 1fr); /* 1 columna en pantallas pequeñas */
+        grid-template-rows: auto;
+    }
+}
 
 </style>
+
 <script>
-
-    
-
-    document.addEventListener("DOMContentLoaded", function () {
-        // Gráfico 1: Playlist con más likes
-        fetch("{{ path('estadisticas_playlist_likes') }}")
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.nombre);
-                const values = data.map(item => item.likes);
-
-                const ctx = document.getElementById('playlistLikesChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'polarArea',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total Likes',
-                            data: values,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        
-                    }
-                });
+document.addEventListener("DOMContentLoaded", function () {
+    // Gráfico 1: Playlist con más likes
+    fetch("{{ path('estadisticas_playlist_likes') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.nombre);
+            const values = data.map(item => item.likes);
+            const ctx = document.getElementById('playlistLikesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'polarArea',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Likes',
+                        data: values,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
             });
+        });
 
-        // Gráfico 2: Playlist con más reproducciones
-        fetch("{{ path('estadisticas_playlist_reproducciones') }}")
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.nombre);
-                const values = data.map(item => item.reproducciones);
-
-                const ctx = document.getElementById('playlistReproduccionesChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total Reproducciones',
-                            data: values,
-                            backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                            borderColor: 'rgba(153, 102, 255, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+    // Gráfico 2: Playlist con más reproducciones
+    fetch("{{ path('estadisticas_playlist_reproducciones') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.nombre);
+            const values = data.map(item => item.reproducciones);
+            const ctx = document.getElementById('playlistReproduccionesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: values,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
             });
+        });
 
-        // Gráfico 3: Distribución de edades de usuarios
-        fetch("{{ path('estadisticas_usuario_edades') }}")
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.rango);
-                const values = data.map(item => item.cantidad);
-
-                const ctx = document.getElementById('usuarioEdadesChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Cantidad de usuarios',
-                            data: values,
-                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
-                            borderColor: 'rgba(255, 159, 64, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+    // Gráfico 3: Distribución de edades de usuarios
+    fetch("{{ path('estadisticas_usuario_edades') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.rango);
+            const values = data.map(item => item.cantidad);
+            const ctx = document.getElementById('usuarioEdadesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Cantidad de usuarios',
+                        data: values,
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
             });
+        });
 
-        // Gráfico 4: Canciones más reproducidas
-        fetch("{{ path('estadisticas_cancion_reproducciones') }}")
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.titulo);
-                const values = data.map(item => item.reproducciones);
-
-                const ctx = document.getElementById('cancionReproduccionesChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'doughnut',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total Reproducciones',
-                            data: values,
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+    // Gráfico 4: Canciones más reproducidas
+    fetch("{{ path('estadisticas_cancion_reproducciones') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.titulo);
+            const values = data.map(item => item.reproducciones);
+            const ctx = document.getElementById('cancionReproduccionesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: values,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
             });
+        });
 
-        // Gráfico 5: Distribución de reproducción por estilos
-        fetch("{{ path('estadisticas_estilo_reproducciones') }}")
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.estilo);
-                const values = data.map(item => item.totalReproducciones);
-
-                const ctx = document.getElementById('estiloReproduccionesChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Total Reproducciones',
-                            data: values,
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgba(255, 99, 132, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
+    // Gráfico 5: Distribución de reproducción por estilos
+    fetch("{{ path('estadisticas_estilo_reproducciones') }}")
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.estilo);
+            const values = data.map(item => item.totalReproducciones);
+            const ctx = document.getElementById('estiloReproduccionesChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Reproducciones',
+                        data: values,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: { y: { beginAtZero: true } }
+                }
             });
-    });
+        });
+});
 </script>
 {% endblock %}
