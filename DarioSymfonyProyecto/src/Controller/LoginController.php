@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 
 final class LoginController extends AbstractController
 {
+
     #[Route('/login', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils, LoggerInterface $logger): Response
     {
@@ -22,11 +23,10 @@ final class LoginController extends AbstractController
         $fecha = new \DateTime();
 
 
-        
-        $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $lastUsername . " ha iniciado sesión";
-            
-        $logger->debug($mensajeLog);
-        
+        if ($this->getUser()) {
+            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $this->getUser()->getUserIdentifier() . " ha iniciado sesión";
+            $logger->debug($mensajeLog);
+        }
 
         return $this->render('login/index.html.twig', [
             'controller_name' => 'LoginController',
@@ -36,9 +36,12 @@ final class LoginController extends AbstractController
     }
 
 
+
+
     #[Route('/logout', name: 'app_logout')]
     public function logout(): void
     {
+        // Symfony maneja el logout internamente, así que no hace falta lanzar una excepción
         throw new \Exception('No olvides configurar el firewall en security.yaml');
     }
 }

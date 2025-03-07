@@ -13,6 +13,7 @@
     <header>
         <div id="LogoSpotify">
             <Img id="Logo" alt="ImagenLogo" src="./imagenes/logo.png"></Img>
+            
         </div>
 
         <div id="Busqueda">
@@ -22,6 +23,9 @@
 
         <div id="SimboloLogIn">
             <img src="./imagenes/acceso.png" alt="" id="SimboloLogIn">
+            <a href="/login" id="eLogin">Login</a><br>
+            <a href="/register/" id="eRegistro">Registro</a>
+            <a href="/logout/" id="eLogout" style="display: none;">Logout</a>
         </div>
     </header>
 
@@ -32,10 +36,9 @@
                     Tu Biblioteca</a><br>
 
                 <div id="navSeparado">
-                    <a href="./canciones.html" id="navCanciones"><img src="./imagenes/musica (3).png" alt="">
-                        Canciones</a><br>
-                    <a href="./playlist.html" id="navPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt="">
-                        Playlist</a>
+                    <a href="./canciones.html" id="navCanciones"><img src="./imagenes/musica (3).png" alt="">Canciones</a><br>
+                    <a href="./playlist.html" id="navPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt="">Playlist</a><br>
+                    <a href="/playlist/crear" style="display: none;" id="crearPlaylist"><img src="./imagenes/lista-de-reproduccion.png" alt=""> Crear Playlist</a>
                 </div>
             </div>
         </nav>
@@ -43,6 +46,8 @@
             <div id="contenidoPlaylist">
 
             </div> <br>
+            <div id="contenidoPlaylistUsuario">
+            </div>
 
     </div>
 
@@ -54,7 +59,7 @@
 
 
     <script src="./script/scriptPlaylist.js"></script>
-    <script src="./script/scriptBusqueda.js"></script>
+    <script src="./script/scriptIndex.js"></script>
 
 </body>
 

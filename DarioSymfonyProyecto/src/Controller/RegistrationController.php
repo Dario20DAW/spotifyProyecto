@@ -10,11 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Psr\Log\LoggerInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, LoggerInterface $logger): Response
     {
         $user = new Usuario();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -22,21 +23,25 @@ class RegistrationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-
+            $fecha = new \DateTime();
+            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $user->getEmail() . " se ha registrado";      
+            $logger->debug($mensajeLog);  
             // encode the plain password
             $user->setPassword($userPasswordHasher->hashPassword
             (
                 $user, 
                 $form->get('plainPassword')->getData()
-        
-        ));
+            )
+              
+
+        );
 
             $entityManager->persist($user);
             $entityManager->flush();
 
             // do anything else you need here, like send an email
 
-           // return $this->redirectToRoute('app_usuario');
+           return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
