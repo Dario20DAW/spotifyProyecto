@@ -69,3 +69,22 @@ input, select {
     font-size: 14px;
     margin-bottom: 10px;
 }
+
+
+
+.error-message {
+    font-size: 18px;
+    color: #ff0000; /* Rojo para el mensaje */
+    font-family: Arial, sans-serif;
+    margin-bottom: 20px; /* Asegúrate de que haya espacio debajo del párrafo */
+}
+
+.error-link {
+    color: #007bff; /* Azul para el enlace */
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.error-link:hover {
+    text-decoration: underline;
+}

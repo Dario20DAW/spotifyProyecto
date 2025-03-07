@@ -1,0 +1,60 @@
+}
+
+{% block head %}
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: rgb(41, 40, 40);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Contenedor de los mensajes de error */
+        .error-container {
+            width: 60%;
+            max-width: 640px;
+            background-color: rgb(31, 26, 26);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(243, 242, 242, 0.1);
+            text-align: center;
+        }
+
+        /* Estilo para el mensaje de error */
+        .error-message {
+            font-size: 18px;
+            color: rgb(238, 40, 40); /* Rojo para el mensaje */
+            font-family: Arial, sans-serif;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para el enlace */
+        .error-link {
+            color: rgb(238, 40, 40); /* Rojo para el enlace */
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            border: 2px solid rgb(238, 40, 40);
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .error-link:hover {
+            background-color: rgb(238, 40, 40);
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="error-container">
+        <p class="error-message">{{ message }}</p>
+        <a href="{{ home_url }}" class="error-link">Volver al inicio</a>
+    </div>
+{% endblock %}

@@ -24,7 +24,7 @@ header {
     justify-content: space-between;
     background-color: rgb(238, 40, 40);
     text-align: center;
-    height: 150px;
+    height: 150px !important;
 }
 
 header a{
