@@ -13,28 +13,29 @@ final class LoginController extends AbstractController
 {
 
     #[Route('/login', name: 'app_login')]
-    public function index(AuthenticationUtils $authenticationUtils, LoggerInterface $logger): Response
-    {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
+public function index(AuthenticationUtils $authenticationUtils): Response
+{
+    $error = $authenticationUtils->getLastAuthenticationError();
+    $lastUsername = $authenticationUtils->getLastUsername();
 
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
+    return $this->render('login/index.html.twig', [
+        'controller_name' => 'LoginController',
+        'last_username' => $lastUsername,
+        'error' => $error,
+    ]);
+}
+
+#[Route('/login/success', name: 'app_login_success')]
+public function loginSuccess(LoggerInterface $logger): Response
+{
+    if ($this->getUser()) {
         $fecha = new \DateTime();
-
-
-        if ($this->getUser()) {
-            $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $this->getUser()->getUserIdentifier() . " ha iniciado sesión";
-            $logger->debug($mensajeLog);
-        }
-
-        return $this->render('login/index.html.twig', [
-            'controller_name' => 'LoginController',
-            'last_username' => $lastUsername,
-            'error' => $error,
-        ]);
+        $mensajeLog = $fecha->format('Y-m-d H:i:s') . " - El usuario: " . $this->getUser()->getUserIdentifier() . " ha iniciado sesión";
+        $logger->info($mensajeLog); 
     }
 
+    return $this->redirect('/'); // Redirige al usuario a la página de inicio
+}
 
 
 

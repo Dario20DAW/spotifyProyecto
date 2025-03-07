@@ -54,7 +54,7 @@
     height: 400px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.46);
     padding: 15px;
     display: flex;
     flex-direction: column;
@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const values = data.map(item => item.cantidad);
             const ctx = document.getElementById('usuarioEdadesChart').getContext('2d');
             new Chart(ctx, {
-                type: 'bar',
+                type: 'pie',
                 data: {
                     labels: labels,
                     datasets: [{
