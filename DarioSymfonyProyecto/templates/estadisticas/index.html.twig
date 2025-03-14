@@ -36,53 +36,62 @@
 /* Contenedor principal de los gráficos */
 .charts-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columnas */
-    grid-template-rows: repeat(2, auto); /* 2 filas */
-    gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 20px;
     max-width: 90%;
     margin: 0 auto;
     padding: 20px 0;
+    align-items: start; /* Alinea los gráficos en la parte superior */
 }
 
 /* Ajustar el último gráfico para centrarlo en la segunda fila */
 .chart-container:nth-child(4) {
-    grid-column: 2 / 3; /* Poner en la segunda columna de la segunda fila */
+    grid-column: 2 / 3;
 }
 
 /* Configuración base de los gráficos */
 .chart-container {
-    height: 400px;
+    height: 560px;
     background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.46);
-    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid #555;
+    border: 1px solid #ccc;
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Ajustar el tamaño de los gráficos */
-canvas {
-    width: 100% !important;
-    height: 320px !important;
+.chart-container:hover {
+    transform: scale(1.02); /* Pequeño efecto al pasar el mouse */
 }
+
+/* Ajustar el tamaño de los gráficos y evitar que se salgan del contenedor */
+canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    aspect-ratio: 1 / 1; /* Mantener proporción cuadrada */
+}
+
 
 /* Responsividad */
 @media (max-width: 1200px) {
     .charts-wrapper {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en pantallas medianas */
+        grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, auto);
     }
     .chart-container:nth-child(4) {
-        grid-column: auto; /* Vuelve a flujo normal */
+        grid-column: auto;
     }
 }
 
 @media (max-width: 768px) {
     .charts-wrapper {
-        grid-template-columns: repeat(1, 1fr); /* 1 columna en pantallas pequeñas */
+        grid-template-columns: repeat(1, 1fr);
         grid-template-rows: auto;
     }
 }
@@ -99,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const values = data.map(item => item.likes);
             const ctx = document.getElementById('playlistLikesChart').getContext('2d');
             new Chart(ctx, {
-                type: 'polarArea',
+                type: 'radar',
                 data: {
                     labels: labels,
                     datasets: [{
